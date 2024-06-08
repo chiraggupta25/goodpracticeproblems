@@ -1,6 +1,10 @@
 // Online Java Compiler
 // Use this editor to write, compile and run your Java code online
 
+
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+
 import java.util.*;
 
 //float is 32 bit whereas decimal is 64 bit. 
@@ -8,7 +12,7 @@ class StringToDecimal {
     public static void main(String[] args) {
         System.out.println("Try programiz.pro");
         StringToDecimal stringToDecimal = new StringToDecimal();
-        System.out.printf("%f %n",stringToDecimal.parseStringToDecimal(".54689"));
+        System.out.printf("%f %n",stringToDecimal.parseStringToDecimal("35443543.54689"));
     }
     
     double parseStringToDecimal(String s){
@@ -69,11 +73,12 @@ class StringToDecimal {
         else{
             firstPartArray = s.toCharArray();
         }
-        double beforeDecimalValue = convertCharArrayToDecimal(firstPartArray,false);
+        double beforeDecimalValue = convertCharArrayToDecimal(firstPartArray);
         
         double afterDecimalValue = 0.0f;
         if(decimalIndex > -1){
-            afterDecimalValue = convertCharArrayToDecimal(secondPartArray,true);
+            afterDecimalValue = convertCharArrayToDecimal(secondPartArray);
+            afterDecimalValue = Math.pow(.1,secondPartArray.length)*afterDecimalValue;
         }
         beforeDecimalValue += afterDecimalValue;
         if(isNegative){
@@ -82,25 +87,25 @@ class StringToDecimal {
         
         return beforeDecimalValue;
     }
+    //In case you don't want to use the Math.pow function
+    double convertNumberToDecimal(double number,int decimalPlaces){
+        double output = 0;
+        double multi = 1f;
+        double multiplierF = .1;
+        for(int i =0; i < decimalPlaces; i++){
+            multi = multi *multiplierF;
+        }
+        return output*multi;
+    }
     
-    double convertCharArrayToDecimal(char[] value, boolean isDecimal){
-        double output = 0.0f;
+    double convertCharArrayToDecimal(char[] value){
+        double output = 0;
         int multiplier = 1;
         int multiplierFactor = 10;
 
         for(int i = value.length-1; i >=0; i--){
             output += Character.getNumericValue(value[i]) * multiplier;
             multiplier = multiplier*multiplierFactor;
-        }
-        
-        if(isDecimal){
-            float multi = 1f;
-            float multiplierF = .10f;
-             for(int i =0; i < value.length; i++){
-                multi = multi *multiplierF;
-            }
-            output = output*multi;
-            
         }
         return output;
     }
