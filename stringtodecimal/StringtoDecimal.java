@@ -7,12 +7,12 @@
 
 import java.util.*;
 
-//float is 32 bit whereas decimal is 64 bit. 
+//float is 32 bit whereas double is 64 bit. 
 class StringToDecimal {
     public static void main(String[] args) {
         System.out.println("Try programiz.pro");
         StringToDecimal stringToDecimal = new StringToDecimal();
-        System.out.printf("%f %n",stringToDecimal.parseStringToDecimal("35443543.54689"));
+        System.out.printf("%f %n",stringToDecimal.parseStringToDecimal("05.54689"));
     }
     
     double parseStringToDecimal(String s){
@@ -35,10 +35,26 @@ class StringToDecimal {
         int decimalCount = 0;
         int decimalIndex=-1;
         boolean isNegative = false;
+        int countLeadingZeros = 0;
         for(int i = 0; i< s.length(); i++){
+            
+            
             if(!whiteListSet.contains(inputArray[i])){
                 isInvalidDecimal = true;
                 break;
+            }
+            if(Character.compare(inputArray[i], '0') == 0 && countLeadingZeros == i){
+                countLeadingZeros++;
+                int checkForDecimalAfterLeadingZero=i+1;
+                if(checkForDecimalAfterLeadingZero >=  s.length()){
+                    
+                }
+                else{
+                    if(Character.compare(inputArray[checkForDecimalAfterLeadingZero], '.') != 0 || countLeadingZeros > 1){
+                        isInvalidDecimal = true;
+                        break;
+                    }
+                }
             }
             if(Character.compare(inputArray[i], '-') == 0){
                 isNegative = true;
@@ -58,6 +74,7 @@ class StringToDecimal {
             }
         }
         if(isInvalidDecimal){
+            System.out.println("Invalid Input");
             return 0.0;
         }
         char[] firstPartArray = null;
